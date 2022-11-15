@@ -3,12 +3,12 @@ import os
 from PIL import Image
 from flask import Flask, request, render_template, url_for
 from werkzeug.utils import secure_filename, redirect
-#from gevent.pywsgi import WSGIServer
+from gevent.pywsgi import WSGIServer
 from keras.models import load_model
 from keras.preprocessing import image
 from flask import send_from_directory
 
-UPLOAD_FOLDER = 'D:/ibm/data'
+UPLOAD_FOLDER = 'D:/IBM/Final Deliverable/data'
 
 
 app = Flask(__name__)
