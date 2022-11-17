@@ -1,24 +1,20 @@
+from flask import Flask,render_template,request
+from recognizer import recognize
 
-@app.route('/predict', methods=['GET', 'POST'])
-def upload():
-    if request.method == "POST":
-        f = request.files["image"]
-        filepath = secure_filename(f.filename)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
+app=Flask(__name__)
 
-        upload_img = os.path.join(UPLOAD_FOLDER, filepath)
-        img = Image.open(upload_img).convert("L")  # convert image to monochrome
-        img = img.resize((28, 28))  # resizing of input image
-
-        im2arr = np.array(img)  # converting to image
-        im2arr = im2arr.reshape(1, 28, 28, 1)  # reshaping according to our requirement
-
-        pred = model.predict(im2arr)
-
-        num = np.argmax(pred, axis=1)  # printing our Labels
-
-        return render_template('predict.html', num=str(num[0]))
+@app.route('/')
+def main():
+    return render_template("home.html")
 
 
-if __name__ == '__main__':
-    app.run(debug=True, threaded=False)
+@app.route('/predict',methods=['POST'])
+def predict():
+    if request.method=='POST':
+      image = request.files.get('photo', '')
+      best, others, img_name = recognize(image)
+      return render_template("predict.html", best=best, others=others, img_name=img_name)
+
+
+if __name__=="__main__":
+    app.run()

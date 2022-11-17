@@ -1,49 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Prediction</title>
-</head>
-
-<style>
-    body{
-     background-image: url('static/images/bc1.jpg');
-     background-repeat: no-repeat;
-     background-size: cover;
-    }
-
-    #rectangle{
-     width:400px;
-     height:150px;
-     background-color: #000000;
-     border-radius: 15px;
-     position:absolute;
-     box-shadow: 0px 0px 10px 5px white;
-     top:25%;
-     left:50%;
-     transform:translate(-50%,-50%);
-    }
-
-    #head{
-  text-align: center;
-  font-size: 30px;
-  margin: 0 auto;
-  padding: 3% 5%;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-    }
-
-    #num{
-        font-size: 50px;
-    }
-
-</style>
-
-<body>
-    
-    <div id="rectangle">
-        <h1 id="head">Predicted Number : <br><center id="num">{{num}}</center></h1>
-    </div>
-
-</body>
+<html>
+	<head>
+		<title>Prediction | Handwritten Digit Recognition</title>
+		<link rel="stylesheet" href="{{url_for('static',filename='css/predict.css')}}" />
+		<link rel="icon" type="image/svg" sizes="32x32" href="{{url_for('static',filename='images/icon.svg')}}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<div class="container">
+			<h1>Prediction</h1>
+			<div class="result-wrapper">
+				<div class="input-image-container">
+					<img src="{{url_for('static',filename='data/')}}{{img_name}}" />
+				</div>
+				<div class="result-container">
+					<div class="value">{{best.0}}</div>
+					<div class="accuracy">{{best.1}}%</div>
+				</div>
+			</div>
+			<h1>Other Predictions</h1>
+			<div class="other_predictions">
+				{% for x in others %}
+				<div class="value">
+					<h2>{{x.0}}</h2>
+					<div class="accuracy">{{x.1}}%</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
 </html>
